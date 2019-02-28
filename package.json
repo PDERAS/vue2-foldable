@@ -1,0 +1,31 @@
+{
+  "name": "@pderas/vue2-foldable",
+  "version": "1.0.0",
+  "description": "A vue 2 component to show / hide content",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PDERAS/vue2-foldable.git"
+  },
+  "keywords": [
+    "vue2",
+    "vue2js",
+    "vue2foldable",
+    "vue2-foldable",
+    "foldable"
+  ],
+  "contributors": [
+      {
+          "name": "Reed Jones",
+          "email": "reed.jones@pderas.com"
+      }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PDERAS/vue2-foldable/issues"
+  },
+  "homepage": "https://github.com/PDERAS/vue2-foldable#readme"
+}
