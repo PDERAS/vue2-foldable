@@ -13,10 +13,11 @@
     /**
      * Heavily stripped down version of https://github.com/ulivz/vue-foldable
      */
-
     import defaults from '../options';
 
     export default {
+        name: 'foldable',
+
         props: {
             minHeight: {
                 type: Number,
