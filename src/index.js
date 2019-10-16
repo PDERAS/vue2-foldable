@@ -1,7 +1,6 @@
 import Foldable from './components/Foldable.vue';
 import options from './options';
 
-
 const VueFoldablePlugin = {
     install(Vue, globalOptions) {
         if (globalOptions) {
