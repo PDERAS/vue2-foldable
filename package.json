@@ -1,14 +1,22 @@
 {
   "name": "@pderas/vue2-foldable",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A vue 2 component to show / hide content",
-  "main": "index.js",
+  "main": "dist/vue-foldable.umd.min.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint src --ext .js,.vue",
+    "lint:fix": "eslint src --ext .js,.vue --fix",
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "bundle:project": "vue-cli-service build --target lib --name vue-foldable ./src/index.js",
+    "bundle": "npm run lint && npm run bundle:project"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PDERAS/vue2-foldable.git"
+    "url": "git@github.com:PDERAS/vue2-foldable.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   },
   "keywords": [
     "vue2",
@@ -18,14 +26,30 @@
     "foldable"
   ],
   "contributors": [
-      {
-          "name": "Reed Jones",
-          "email": "reed.jones@pderas.com"
-      }
+    {
+      "name": "Reed Jones",
+      "email": "reed.jones@pderas.com"
+    }
   ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/PDERAS/vue2-foldable/issues"
   },
-  "homepage": "https://github.com/PDERAS/vue2-foldable#readme"
+  "homepage": "https://github.com/PDERAS/vue2-foldable#readme",
+  "files": [
+    "dist/*",
+    "src/*"
+  ],
+  "devDependencies": {
+    "@pderas/eslint-config": "^1.0.0",
+    "@vue/babel-preset-app": "^3.12.0",
+    "@vue/cli-plugin-babel": "^3.12.0",
+    "@vue/cli-plugin-eslint": "^3.12.0",
+    "@vue/cli-service": "^3.12.0",
+    "eslint": "^6.5.1",
+    "fibers": "^4.0.1",
+    "sass": "^1.23.0",
+    "sass-loader": "^8.0.0",
+    "vue-template-compiler": "^2.6.10"
+  }
 }
