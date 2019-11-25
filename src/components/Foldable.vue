@@ -1,97 +1,101 @@
 <template>
-    <div class="vue-accordion">
-        <div
-            class="vue-accordion-container"
-            :style="{ maxHeight: currentMaxHeight + 'px' }"
-            ref="container" >
-            <slot />
-        </div>
+<div class="vue-accordion">
+    <div
+        ref="container"
+        class="vue-accordion-container"
+        :style="{ maxHeight: currentMaxHeight + 'px' }">
+        <slot />
     </div>
+</div>
 </template>
 
 <script>
-    /**
+/**
      * Heavily stripped down version of https://github.com/ulivz/vue-foldable
      */
-    import defaults from '../options';
+import defaults from '../options';
 
-    export default {
-        name: 'foldable',
+export default {
+    name: 'Foldable',
 
-        props: {
-            minHeight: {
-                type: Number,
-                default: function() {
-                    return defaults.peekabooHeight;
-                }
-            },
-            height: {
-                type: [Number, String],
-                default: function() {
-                    return defaults.peekabooHeight;
-                }
-            },
-            collapsed: {
-                type: Boolean,
-                required: true
+    props: {
+        minHeight: {
+            type: Number,
+            default: function() {
+                return defaults.peekabooHeight;
             }
         },
-        data: function() {
-            let height = this.height;
-            if (typeof this.height === "number" && this.height < this.minHeight) {
-                height = this.minHeight;
+        height: {
+            type: [Number, String],
+            default: function() {
+                return defaults.peekabooHeight;
             }
-            return {
-                currentMaxHeight: height,
-                threshold: height,
-                reachThreshold: true,
-                percentageMode:
-                    typeof this.height === "string" &&
-                    this.height.indexOf("%") !== -1,
-                percentage: null
-            };
         },
-        created: function() {
+        collapsed: {
+            type: Boolean,
+            required: true
+        }
+    },
+    data: function() {
+        let height = this.height;
+        if (typeof this.height === 'number' && this.height < this.minHeight) {
+            height = this.minHeight;
+        }
+        return {
+            currentMaxHeight: height,
+            threshold: height,
+            reachThreshold: true,
+            percentageMode:
+                    typeof this.height === 'string' &&
+                    this.height.indexOf('%') !== -1,
+            percentage: null
+        };
+    },
+    created: function() {
+        if (this.percentageMode) {
+            this.percentage =
+                    parseInt(this.threshold.replace('%', '').trim()) / 100;
+        } else if (typeof this.height === 'string') {
+            this.currentMaxHeight = this.threshold = DEFAULT_VISUAL_HEIGHT;
+        }
+    },
+    mounted: function() {
+        this.handleMount();
+
+        if(!this.collapsed){
+            this.currentMaxHeight = this.$refs.container.scrollHeight;
+        }
+    },
+    methods: {
+        handleMount: function() {
+            const contentHeight = this.$refs.container.scrollHeight;
+            this.calculateThreshold(contentHeight);
+            this.checkReachThresfold(contentHeight);
+        },
+        checkReachThresfold: function(contentHeight) {
+            this.reachThreshold = contentHeight > this.threshold;
+        },
+        calculateThreshold: function(contentHeight) {
             if (this.percentageMode) {
-                this.percentage =
-                    parseInt(this.threshold.replace("%", "").trim()) / 100;
-            } else if (typeof this.height === "string") {
-                this.currentMaxHeight = this.threshold = DEFAULT_VISUAL_HEIGHT;
-            }
-        },
-        mounted: function() {
-            this.handleMount();
-        },
-        methods: {
-            handleMount: function() {
-                const contentHeight = this.$refs.container.scrollHeight;
-                this.calculateThreshold(contentHeight);
-                this.checkReachThresfold(contentHeight);
-            },
-            checkReachThresfold: function(contentHeight) {
-                this.reachThreshold = contentHeight > this.threshold;
-            },
-            calculateThreshold: function(contentHeight) {
-                if (this.percentageMode) {
-                    let calculatedHeight = contentHeight * this.percentage;
-                    if (calculatedHeight < this.minHeight) {
-                        calculatedHeight = this.minHeight;
-                    }
-                    this.currentMaxHeight = calculatedHeight;
-                    this.threshold = calculatedHeight;
+                let calculatedHeight = contentHeight * this.percentage;
+                if (calculatedHeight < this.minHeight) {
+                    calculatedHeight = this.minHeight;
                 }
-            }
-        },
-        watch: {
-            collapsed: function(newVal) {
-                if (newVal) {
-                    this.currentMaxHeight = this.threshold;
-                } else {
-                    // explicitly set max height so that it can be transitioned
-                    this.currentMaxHeight = this.$refs.container.scrollHeight;
-                }
+                this.currentMaxHeight = calculatedHeight;
+                this.threshold = calculatedHeight;
             }
         }
+    },
+    watch: {
+        collapsed: function(newVal) {
+            if (newVal) {
+                this.currentMaxHeight = this.threshold;
+            } else {
+                // explicitly set max height so that it can be transitioned
+                this.currentMaxHeight = this.$refs.container.scrollHeight;
+            }
+        }
+    }
 };
 </script>
 
