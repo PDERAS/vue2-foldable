@@ -11,8 +11,8 @@
 
 <script>
 /**
-     * Heavily stripped down version of https://github.com/ulivz/vue-foldable
-     */
+* Heavily stripped down version of https://github.com/ulivz/vue-foldable
+*/
 import defaults from '../options';
 
 export default {
@@ -51,12 +51,11 @@ export default {
             percentage: null
         };
     },
-    created: function() {
-        if (this.percentageMode) {
-            this.percentage =
-                    parseInt(this.threshold.replace('%', '').trim()) / 100;
-        } else if (typeof this.height === 'string') {
-            this.currentMaxHeight = this.threshold = DEFAULT_VISUAL_HEIGHT;
+    created: function () {
+        if(!this.collapsed){
+            this.currentMaxHeight = 9999999;
+        } else {
+            this.currentMaxHeight = 0;
         }
     },
     mounted: function() {

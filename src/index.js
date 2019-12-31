@@ -11,6 +11,6 @@ const VueFoldablePlugin = {
 
         Vue.component(Foldable.name, Foldable);
     }
-}
+};
 
 export default VueFoldablePlugin;
