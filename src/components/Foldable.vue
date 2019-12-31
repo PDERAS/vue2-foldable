@@ -52,10 +52,15 @@ export default {
         };
     },
     created: function () {
-        if(!this.collapsed){
-            this.currentMaxHeight = 9999999;
+        if (this.percentageMode) {
+            this.percentage =
+                    parseInt(this.threshold.replace('%', '').trim()) / 100;
         } else {
-            this.currentMaxHeight = 0;
+            if(!this.collapsed){
+                this.currentMaxHeight = 9999999;
+            } else {
+                this.currentMaxHeight = 0;
+            }
         }
     },
     mounted: function() {
